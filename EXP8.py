@@ -1,0 +1,32 @@
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+from skimage import color
+from skimage.filters import threshold_otsu, threshold_local
+
+# Read the image
+page_image = cv2.imread('/home/computer/Desktop/images.jpeg')
+
+# Convert to grayscale
+page_image = cv2.cvtColor(page_image, cv2.COLOR_BGR2GRAY)
+
+# --- Global Thresholding using Otsu ---
+global_thresh = threshold_otsu(page_image)
+binary_global = page_image > global_thresh
+
+plt.figure(figsize=(6, 6))
+plt.imshow(binary_global, cmap='gray')
+plt.title('Global Thresholding')
+plt.axis('off')
+plt.show()
+
+# --- Local (Adaptive) Thresholding ---
+block_size = 35
+local_thresh = threshold_local(page_image, block_size, offset=0.1)
+binary_local = page_image > local_thresh
+
+plt.figure(figsize=(6, 6))
+plt.imshow(binary_local, cmap='gray')
+plt.title('Local Thresholding')
+plt.axis('off')
+plt.show()

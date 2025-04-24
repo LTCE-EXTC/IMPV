@@ -1,0 +1,31 @@
+import numpy as np
+import cv2
+
+# Read the input image in grayscale
+img1 = cv2.imread("C:/Users/lenovo/Downloads/th.jpeg", 0)
+
+# Obtain the number of rows and columns of the image
+m, n = img1.shape
+
+# Develop Averaging filter (3x3 mask)
+mask = np.ones((3, 3))
+mask = mask / 9
+
+# Convolve the 3x3 mask over the image
+img_new = np.zeros((m, n))
+
+for i in range(1, m - 1):
+    for j in range(1, n - 1):
+        temp = (img1[i-1, j-1]*mask[0, 0] + img1[i-1, j]*mask[0, 1] + img1[i-1, j+1]*mask[0, 2] +
+                img1[i, j-1]*mask[1, 0] + img1[i, j]*mask[1, 1] + img1[i, j+1]*mask[1, 2] +
+                img1[i+1, j-1]*mask[2, 0] + img1[i+1, j]*mask[2, 1] + img1[i+1, j+1]*mask[2, 2])
+        img_new[i, j] = temp
+
+# Convert the resulting image into uint8 format
+img_new = img_new.astype(np.uint8)
+
+# Display the input and output images
+cv2.imshow('Input Image', img1)
+cv2.imshow('LPF Image', img_new)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

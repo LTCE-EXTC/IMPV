@@ -1,0 +1,26 @@
+import numpy as np
+import cv2
+
+img = cv2.imread("C:/Users/lenovo/Downloads/scorpio.jpeg", 0)
+cv2.imshow('p', img)
+m, n = img.shape
+
+cropped_image = img[100:250, 50:350]
+cv2.imshow('cropped', cropped_image)
+
+down_width = 100
+down_height = 100
+down_points = (down_width, down_height)
+resized_down = cv2.resize(img, down_points, interpolation=cv2.INTER_LINEAR)
+
+up_width = 400
+up_height = 400
+up_points = (up_width, up_height)
+resized_up = cv2.resize(img, up_points, interpolation=cv2.INTER_LINEAR)
+
+cv2.imshow("resize down", resized_down)
+cv2.imshow("resize up", resized_up)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+

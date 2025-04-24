@@ -1,0 +1,20 @@
+import numpy as np
+import cv2
+
+# Load the image in grayscale
+img1 = cv2.imread('C:/Users/lenovo/Downloads/scorpio.jpeg', 0)
+
+# Apply Gaussian blur to reduce noise (optional, but often recommended for Canny)
+blurred_image = cv2.GaussianBlur(img1, (5, 5), 0)
+
+# Perform Canny edge detection
+lower_threshold = 100  # Lower threshold for edge linking
+upper_threshold = 200  # Upper threshold for edge linking
+canny_edges = cv2.Canny(blurred_image, lower_threshold, upper_threshold)
+
+# Display the images
+cv2.imshow('Input Image', img1)
+cv2.imshow('Canny Edge Detection', canny_edges)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

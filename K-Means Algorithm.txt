@@ -1,0 +1,42 @@
+# Set environment variable before any other imports
+import os
+os.environ["OMP_NUM_THREADS"] = "1"
+
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+# Data points
+x = [8, 10, 12, 8, 6, 22, 28, 12, 20, 24]
+y = [42, 38, 90, 34, 32, 50, 48, 44, 42, 21]
+
+# Initial scatter plot
+plt.scatter(x, y)
+plt.title('Initial Scatter Plot')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.show()
+
+# Combine into (x, y) pairs
+data = list(zip(x, y))
+inertias = []
+
+# Elbow method
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i, random_state=0)
+    kmeans.fit(data)
+    inertias.append(kmeans.inertia_)
+
+plt.plot(range(1, 11), inertias, marker='o')
+plt.title('Elbow Method')
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.show()
+
+# Final clustering
+kmeans = KMeans(n_clusters=3, random_state=0)
+kmeans.fit(data)
+plt.scatter(x, y, c=kmeans.labels_, cmap='rainbow')
+plt.title('Clustered Data')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.show()
